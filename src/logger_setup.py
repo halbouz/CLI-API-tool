@@ -1,4 +1,5 @@
-import logging, datetime
+import logging
+import datetime
 from pathlib import Path
 
 
@@ -14,9 +15,9 @@ def configure_logger(lgr):
     p.mkdir(exist_ok=True)
 
     if not lgr.hasHandlers():
-        # Set log file
-        current_date = datetime.date.today().strftime("%d-%m-%Y")
-        handler = logging.FileHandler(f"./LOG/{current_date}-{lgr.name}.log")
+        # Set log file name
+        current_datetime = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M")
+        handler = logging.FileHandler(f"./LOG/{current_datetime} {lgr.name}.log")
 
         # Set level and format
         formatter = logging.Formatter("%(asctime)s - %(name)s - %(levelname)s - %(message)s")
@@ -29,8 +30,8 @@ def configure_logger(lgr):
 
         # Log changes and initialization
         if not directory_exists:
-            logger.info("LOG directory added")
-        lgr.info("logger setup completed")
+            logger.info("LOG directory added.")
+        lgr.info("Logger setup completed.")
 
 
 # Initialize logger
