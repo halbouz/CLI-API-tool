@@ -33,7 +33,3 @@ def configure_logger(lgr):
         if not directory_exists:
             lgr.info(f"{dir_name} directory created.")
         lgr.info("Logger setup completed")
-
-# Initialize logger
-logger = logging.getLogger(__name__)
-configure_logger(logger)
