@@ -1,19 +1,9 @@
 import logging
 import datetime
+from directory_maker import make_directory
 
+# Set current datetime, this will be used for naming the log
 current_datetime = datetime.datetime.now().strftime("%d-%m-%Y_%H-%M")
-
-from pathlib import Path
-
-def make_directory(directory):
-    """
-    This function creates a given directory if it does not already exist
-
-    :param directory: given directory
-    """
-    p = Path(f"./{directory}/")
-    directory_exists = p.exists()
-    p.mkdir(exist_ok=True)
 
 def configure_logger(lgr):
     """
@@ -22,9 +12,9 @@ def configure_logger(lgr):
     :param lgr: The given logger.
     """
 
-    # Make LOG directory
+    # Create LOG directory
     dir_name = "LOG"
-    make_directory(dir_name)
+    directory_exists = make_directory(dir_name)
 
     if not lgr.hasHandlers():
         # Set log file name
@@ -39,7 +29,11 @@ def configure_logger(lgr):
         handler.setFormatter(formatter)
         lgr.addHandler(handler)
 
+        # Log changes
+        if not directory_exists:
+            lgr.info(f"{dir_name} directory created.")
         lgr.info("Logger setup completed")
 
+# Initialize logger
 logger = logging.getLogger(__name__)
 configure_logger(logger)
